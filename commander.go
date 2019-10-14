@@ -8,6 +8,12 @@ import (
 	"github.com/ManiMuridi/gocmder/command"
 )
 
+type Commander interface {
+	CreateCommand() command.Command
+	Commands() []command.Command
+	Exec()
+}
+
 var (
 	commands = make([]command.Command, 0)
 )

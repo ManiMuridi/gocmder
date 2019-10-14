@@ -1,15 +1,8 @@
 package command
 
-// Descriptor or Meta?
-type Descriptor struct {
-	Name         string
-	PanicOnError bool
-}
-
-type Result interface {
-	Ok() bool
-	Error() string
-	Data() interface{}
+type Result struct {
+	Error error
+	Data  interface{}
 }
 
 type Command interface {
@@ -28,11 +21,6 @@ type Reversible interface {
 //func Revert(cmd Reversible) {
 //	cmd.Revert()
 //}
-
-type Execer interface {
-	Exec(cmd Command)
-	Revert(cmd Reversible)
-}
 
 /**** OLD COMMANDS ****/
 /*
