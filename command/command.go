@@ -6,12 +6,7 @@ type Result struct {
 }
 
 type Command interface {
-	Exec()
-}
-
-type Reversible interface {
-	Command
-	Revert()
+	Exec() Result
 }
 
 //func Exec(cmd Command) {

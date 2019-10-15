@@ -1,18 +1,13 @@
 package gocmder
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 	"strings"
 
 	"github.com/ManiMuridi/gocmder/command"
 )
-
-type Commander interface {
-	CreateCommand() command.Command
-	Commands() []command.Command
-	Exec()
-}
 
 var (
 	commands = make([]command.Command, 0)
@@ -26,8 +21,11 @@ func (n *nilCmd) Result() *command.Result {
 	return nil
 }
 
-func (n *nilCmd) Exec() {
-	fmt.Println(fmt.Sprintf("Could not find command: %s", n.Name))
+func (n *nilCmd) Exec() command.Result {
+	return command.Result{
+		Error: errors.New(fmt.Sprintf("Could not find command: %s", n.Name)),
+		Data:  nil,
+	}
 }
 
 func Add(cmd command.Command) {
@@ -50,6 +48,6 @@ func ExecName(cmdName string) {
 	cmd.Exec()
 }
 
-func Exec(cmd command.Command) {
-	cmd.Exec()
+func Exec(cmd command.Command) command.Result {
+	return cmd.Exec()
 }

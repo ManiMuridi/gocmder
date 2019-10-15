@@ -2,31 +2,28 @@ package user
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/ManiMuridi/gocmder/command"
 )
 
 func Create(user User) *createUserCmd {
-	return &createUserCmd{user: user, result: &command.Result{}}
+	return &createUserCmd{user: user}
 }
 
 type createUserCmd struct {
-	user   User
-	result *command.Result
+	user User
 }
 
-func (c *createUserCmd) Exec() {
+func (c *createUserCmd) Exec() command.Result {
 	if c.user.Name == "" {
-		c.result.Error = errors.New("user name cannot be empty")
-		fmt.Println(fmt.Sprintf("Executing: %+v", c.result))
-		return
+		return command.Result{
+			Error: errors.New("user name cannot be empty"),
+			Data:  nil,
+		}
 	}
 
-	c.result.Data = c.user
-	fmt.Println(fmt.Sprintf("Executing: %+v", c.result))
-}
-
-func (c *createUserCmd) Result() *command.Result {
-	return c.result
+	return command.Result{
+		Error: nil,
+		Data:  c.user,
+	}
 }

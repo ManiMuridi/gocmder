@@ -13,10 +13,12 @@ func main() {
 		Email: "new.user@fakemail.com",
 	})
 
-	gocmder.Exec(createUser)
+	result := gocmder.Exec(createUser)
 
-	if createUser.Result().Error != nil {
+	if result.Error != nil {
 		fmt.Println("Command failed to execute")
+		fmt.Println(result.Error)
+		return
 	}
 
 	fmt.Println("Command executed successfully!")
